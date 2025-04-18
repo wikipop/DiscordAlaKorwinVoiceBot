@@ -36,6 +36,42 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
    uv run main.py
    ```
 
+## Docker
+
+You can run the bot using Docker:
+
+1. Build the Docker image:
+   ```
+   docker build -t korwinai-discord-bot .
+   ```
+
+2. Run the Docker container with your environment variables:
+   ```
+   docker run -d \
+     -e DISCORD_BOT_TOKEN=your_discord_bot_token \
+     -e GOOGLE_SHEETS_LINK=your_google_sheets_link \
+     -e ELEVEN_LABS_API_KEY=your_elevenlabs_api_key \
+     -e AUTHOR_ID=your_discord_user_id \
+     -e GUILD_ID=your_guild_id \
+     --name korwinai-bot \
+     korwinai-discord-bot
+   ```
+
+3. View logs:
+   ```
+   docker logs -f korwinai-bot
+   ```
+
+4. Stop the bot:
+   ```
+   docker stop korwinai-bot
+   ```
+
+5. Remove the container:
+   ```
+   docker rm korwinai-bot
+   ```
+
 ## Commands
 
 - `/korwin`: Plays a random sentence from the catalogue in the voice channel
