@@ -1,25 +1,42 @@
+"""
+Main entry point for the KorwinAI Discord Bot.
+
+This module initializes the application, sets up logging, loads the catalogue,
+and starts the Discord bot.
+"""
+
 import os
-
-from pydub.playback import play
-
-from bot import run_discord_bot
-from entities.Category import Category
-from entities.KorwinCatalogue import KorwinCatalogue
-from dotenv import load_dotenv
 import logging
-import discord
-from utils.setup_logging import setup_logging
+from dotenv import load_dotenv
 
-load_dotenv()
+from entities import KorwinCatalogue
+from utils import setup_logging
+from bot import run_discord_bot
 
-GOOGLE_SHEETS_LINK = os.getenv("GOOGLE_SHEETS_LINK")
-ELEVEN_LABS_API_KEY = os.getenv("ELEVEN_LABS_API_KEY")
 
-if __name__ == '__main__':
+def main():
+    """
+    Main function that initializes and runs the application.
+    """
+    # Load environment variables
+    load_dotenv()
+
+    # Set up logging
     setup_logging()
 
-    catalogue = KorwinCatalogue(GOOGLE_SHEETS_LINK, ELEVEN_LABS_API_KEY)
+    # Get configuration from environment variables
+    google_sheets_link = os.getenv("GOOGLE_SHEETS_LINK")
+    eleven_labs_api_key = os.getenv("ELEVEN_LABS_API_KEY")
 
+    if not google_sheets_link or not eleven_labs_api_key:
+        logging.error("Missing required environment variables: GOOGLE_SHEETS_LINK and/or ELEVEN_LABS_API_KEY")
+        return
+
+    # Initialize the catalogue
+    logging.info("Initializing Korwin catalogue...")
+    catalogue = KorwinCatalogue(google_sheets_link, eleven_labs_api_key)
+
+    # Check if all texts are cached
     logging.info("Checking if all texts are cached...")
     if catalogue.check_if_all_is_cached():
         logging.info("All texts are cached")
@@ -32,8 +49,14 @@ if __name__ == '__main__':
             logging.info("Generated all texts")
         else:
             logging.error("Cannot continue without cached texts")
-            exit(1)
+            return
 
         logging.info("All texts are cached! Have fun :3")
 
+    # Run the Discord bot
+    logging.info("Starting Discord bot...")
     run_discord_bot(catalogue)
+
+
+if __name__ == '__main__':
+    main()

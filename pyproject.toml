@@ -1,8 +1,14 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "korwinaidiscordbot"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Discord bot that generates and plays Korwin-style sentences"
+readme = "README.md"
 requires-python = ">=3.13"
+license = {text = "MIT"}
 dependencies = [
     "audioop-lts>=0.2.1",
     "discord-py>=2.5.2",
@@ -13,4 +19,28 @@ dependencies = [
     "pynacl>=1.5.0",
     "python-dotenv>=1.1.0",
     "simpleaudio>=1.0.4",
+    "anyio",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "isort",
+    "flake8",
+]
+
+[tool.setuptools]
+packages = ["bot", "entities", "utils"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312", "py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.flake8]
+max-line-length = 100
+exclude = [".git", "__pycache__", "build", "dist"]
