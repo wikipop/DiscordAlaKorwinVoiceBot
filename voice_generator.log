@@ -1,0 +1,12 @@
+[2025-04-18 20:35:22,298] Checking if all texts are cached...
+[2025-04-18 20:35:22,299] All texts are cached
+[2025-04-18 20:35:22,300] logging in using static token
+[2025-04-18 20:35:23,654] Shard ID None has connected to Gateway (Session ID: f7099387e3705bc556129fb77ca7b86b).
+[2025-04-18 20:35:25,675] Logged in as Roman Czapla#8908 (ID: 1362835511559061646)
+[2025-04-18 20:35:41,919] Connecting to voice...
+[2025-04-18 20:35:41,919] Starting voice handshake... (connection attempt 1)
+[2025-04-18 20:35:42,444] Voice handshake complete. Endpoint found: rotterdam1225.discord.media
+[2025-04-18 20:35:42,713] Voice connection complete.
+[2025-04-18 20:35:43,309] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pqHfZKP75CvOlQylNhV4?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+[2025-04-18 20:35:46,567] ffmpeg process 59227 successfully terminated with return code of 0.
+[2025-04-18 20:35:46,595] The voice handshake is being terminated for Channel ID 1066458886443388998 (Guild ID 839583189671608430)
