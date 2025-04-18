@@ -21,18 +21,19 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
 
    Alternatively, using uv (faster alternative to pip):
    ```
-   uv pip install -e .
+   uv sync
    ```
 3. Create a `.env` file with the following variables:
    ```
    DISCORD_BOT_TOKEN=your_discord_bot_token
-   GOOGLE_SHEETS_LINK=your_google_sheets_link
+   GOOGLE_SHEETS_LINK=your_google_sheets_link (or you can use mine https://docs.google.com/spreadsheets/d/1w9nfZaAWvT_jBd0zKkj2zD2cV4k0bYS5FMD-UAa76ng/export?gid=0&format=csv)
    ELEVEN_LABS_API_KEY=your_elevenlabs_api_key
    AUTHOR_ID=your_discord_user_id
    ```
 4. Run the bot:
    ```
    python main.py
+   uv run main.py
    ```
 
 ## Commands
@@ -51,14 +52,12 @@ pip install -e ".[dev]"
 
 Alternatively, using uv:
 ```
-uv pip install -e ".[dev]"
+uv sync --all-extras
 ```
 
 This will install:
-- pytest for testing
 - black for code formatting
 - isort for import sorting
-- flake8 for linting
 
 ## License
 

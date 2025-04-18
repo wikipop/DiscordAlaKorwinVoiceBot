@@ -6,4 +6,4 @@ This subpackage contains functions for setting up and configuring logging.
 
 from utils.logging.setup import setup_logging
 
-__all__ = ['setup_logging']
+__all__ = ["setup_logging"]

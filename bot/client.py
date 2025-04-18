@@ -3,20 +3,21 @@ import logging
 import discord
 from discord import app_commands
 
-from entities.catalogue import KorwinCatalogue
 from bot.commands import VoiceCommands
+from entities.catalogue import KorwinCatalogue
 
 
 class DiscordBot(discord.Client):
     """
     Discord bot client that handles the bot's connection and commands.
     """
+
     def __init__(self, catalogue: KorwinCatalogue):
         # Set up intents
         intents = discord.Intents.default()
         intents.message_content = True
         super().__init__(intents=intents)
-        
+
         # Initialize bot components
         self.tree = app_commands.CommandTree(self)
         self.catalogue = catalogue
@@ -35,5 +36,4 @@ class DiscordBot(discord.Client):
         """
         Called when the bot is ready and connected to Discord.
         """
-        logging.info(f'Logged in as {self.user} (ID: {self.user.id})')
-        logging.info('------')
+        logging.info(f"Logged in as {self.user} (ID: {self.user.id})")

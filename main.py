@@ -5,13 +5,14 @@ This module initializes the application, sets up logging, loads the catalogue,
 and starts the Discord bot.
 """
 
-import os
 import logging
+import os
+
 from dotenv import load_dotenv
 
+from bot import run_discord_bot
 from entities import KorwinCatalogue
 from utils import setup_logging
-from bot import run_discord_bot
 
 
 def main():
@@ -29,7 +30,9 @@ def main():
     eleven_labs_api_key = os.getenv("ELEVEN_LABS_API_KEY")
 
     if not google_sheets_link or not eleven_labs_api_key:
-        logging.error("Missing required environment variables: GOOGLE_SHEETS_LINK and/or ELEVEN_LABS_API_KEY")
+        logging.error(
+            "Missing required environment variables: GOOGLE_SHEETS_LINK and/or ELEVEN_LABS_API_KEY"
+        )
         return
 
     # Initialize the catalogue
@@ -58,5 +61,5 @@ def main():
     run_discord_bot(catalogue)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
