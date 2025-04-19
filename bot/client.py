@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 from asyncio import sleep
 
 import discord
@@ -28,8 +29,11 @@ class DiscordBot(discord.Client):
         self.catalogue = catalogue
         self.voice_commands = None
 
-    @tasks.loop(minutes=30.0)
+    @tasks.loop(minutes=3.5)
     async def korwin_with_interval(self):
+        if random.random() > 0.1:
+            return
+
         logging.info("Playing korwin with interval")
         guild_id = int(os.getenv("GUILD_ID"))
 
