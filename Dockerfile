@@ -7,6 +7,8 @@ WORKDIR /app
 # Install system dependencies including ffmpeg for audio playback
 RUN apt-get update && apt-get install -y \
     ffmpeg \
+    build-essential \
+    portaudio19-dev python3-pyaudio \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project files
