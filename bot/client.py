@@ -30,6 +30,7 @@ class DiscordBot(discord.Client):
 
     @tasks.loop(minutes=30.0)
     async def korwin_with_interval(self):
+        logging.info("Playing korwin with interval")
         guild_id = int(os.getenv("GUILD_ID"))
 
         vc = await max(self.get_guild(guild_id).voice_channels, key=lambda vc: len(vc.members)).connect()
@@ -44,6 +45,7 @@ class DiscordBot(discord.Client):
             await sleep(0.1)
 
         await vc.disconnect()
+        logging.info("Korwin with interval finished")
 
     async def setup_hook(self):
         """

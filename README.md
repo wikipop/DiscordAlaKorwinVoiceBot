@@ -27,13 +27,16 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
 3. Create a `.env` file with the following variables:
    ```
    DISCORD_BOT_TOKEN=your_discord_bot_token
-   GOOGLE_SHEETS_LINK=your_google_sheets_link (or you can use mine https://docs.google.com/spreadsheets/d/1w9nfZaAWvT_jBd0zKkj2zD2cV4k0bYS5FMD-UAa76ng/export?gid=0&format=csv)
+   GOOGLE_SHEETS_LINK=your_google_sheets_link 
    ELEVEN_LABS_API_KEY=your_elevenlabs_api_key
    AUTHOR_ID=your_discord_user_id
    GUILD_ID=your_discord_server_id
    ```
+   > You can use the sentence spreadsheet made by me \
+   > `https://docs.google.com/spreadsheets/d/1w9nfZaAWvT_jBd0zKkj2zD2cV4k0bYS5FMD-UAa76ng/export?gid=0&format=csv` \
+   > If you want to use a custom one, it must reassemble the format of the one provided above, and the export link must end in `/export?gid=0&format=csv`
 
-   Note: The `GUILD_ID` is required for the automatic 30-minute Korwin feature. The bot will join the voice channel with the most members in the server specified by `GUILD_ID`. The `AUTHOR_ID` is used for owner-only commands like `/bóg`.
+   > Note: The `GUILD_ID` is required for the automatic 30-minute Korwin feature. The bot will join the voice channel with the most members in the server specified by `GUILD_ID`. The `AUTHOR_ID` is used for owner-only commands like `/bóg`.
 4. Run the bot:
    ```
    python main.py
