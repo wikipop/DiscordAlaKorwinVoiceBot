@@ -6,6 +6,7 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
 
 - Generate random sentences by combining text segments from different categories
 - Play generated sentences in Discord voice channels
+- Automatically joins voice channel every 30 minutes to play a random Korwin sentence
 - Text-to-speech functionality using ElevenLabs API
 - Caching of generated audio for better performance
 
@@ -29,7 +30,10 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
    GOOGLE_SHEETS_LINK=your_google_sheets_link (or you can use mine https://docs.google.com/spreadsheets/d/1w9nfZaAWvT_jBd0zKkj2zD2cV4k0bYS5FMD-UAa76ng/export?gid=0&format=csv)
    ELEVEN_LABS_API_KEY=your_elevenlabs_api_key
    AUTHOR_ID=your_discord_user_id
+   GUILD_ID=your_discord_server_id
    ```
+
+   Note: The `AUTHOR_ID` and `GUILD_ID` are required for the automatic 30-minute Korwin feature. The bot will join the voice channel of the user specified by `AUTHOR_ID` in the server specified by `GUILD_ID`.
 4. Run the bot:
    ```
    python main.py

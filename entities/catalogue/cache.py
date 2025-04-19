@@ -6,6 +6,7 @@ This module provides caching functionality for audio files generated from text s
 
 import pathlib
 import random
+from typing import Union
 
 from pydub import AudioSegment
 
@@ -54,3 +55,25 @@ class Cache:
         """
         with open(f"{self.cache_dir}/{category.value}/{hash}.mp3", "wb") as f:
             f.write(audio)
+
+    def save_custom_mp3(self, audio: bytes, hash: str) -> None:
+        if not pathlib.Path(f"{self.cache_dir}/custom").exists():
+            pathlib.Path(f"{self.cache_dir}/custom").mkdir()
+
+        with open(f"{self.cache_dir}/custom/{hash}.mp3", "wb") as f:
+            f.write(audio)
+
+    def load_custom_mp3(self, hash: str) -> AudioSegment:
+        if not pathlib.Path(f"{self.cache_dir}/custom").exists():
+            pathlib.Path(f"{self.cache_dir}/custom").mkdir()
+
+        return AudioSegment.from_mp3(f"{self.cache_dir}/custom/{hash}.mp3")
+
+    def is_custom_mp3_cached(self, hash) -> Union[False, AudioSegment]:
+        if not pathlib.Path(f"{self.cache_dir}/custom").exists():
+            pathlib.Path(f"{self.cache_dir}/custom").mkdir()
+
+        if not pathlib.Path(f"{self.cache_dir}/custom/{hash}.mp3").exists():
+            return False
+
+        return self.load_custom_mp3(hash)

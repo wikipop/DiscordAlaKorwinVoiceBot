@@ -1,7 +1,10 @@
 import logging
+import os
+from asyncio import sleep
 
 import discord
 from discord import app_commands
+from discord.ext import tasks
 
 from bot.commands import VoiceCommands
 from entities.catalogue import KorwinCatalogue
@@ -15,7 +18,9 @@ class DiscordBot(discord.Client):
     def __init__(self, catalogue: KorwinCatalogue):
         # Set up intents
         intents = discord.Intents.default()
+        intents.presences = True
         intents.message_content = True
+        intents.members = True
         super().__init__(intents=intents)
 
         # Initialize bot components
@@ -23,11 +28,29 @@ class DiscordBot(discord.Client):
         self.catalogue = catalogue
         self.voice_commands = None
 
+    @tasks.loop(minutes=30.0)
+    async def korwin_with_interval(self):
+        guild_id = int(os.getenv("GUILD_ID"))
+        author_id = int(os.getenv("AUTHOR_ID"))
+        vc = await self.get_guild(guild_id).get_member(int(author_id)).voice.channel.connect()
+
+        vc.play(
+            discord.FFmpegPCMAudio(
+                self.catalogue.get_random_sentence_mp3().export(), pipe=True
+            )
+        )
+
+        while vc.is_playing():
+            await sleep(0.1)
+
+        await vc.disconnect()
+
     async def setup_hook(self):
         """
         Sets up the bot's commands and syncs the command tree.
         This is called automatically when the bot starts.
         """
+
         self.voice_commands = VoiceCommands(self)
         await self.tree.sync()
         logging.info("Command tree synced")
@@ -37,3 +60,5 @@ class DiscordBot(discord.Client):
         Called when the bot is ready and connected to Discord.
         """
         logging.info(f"Logged in as {self.user} (ID: {self.user.id})")
+        await self.korwin_with_interval.start()
+        logging.info("Korwin with interval started")
