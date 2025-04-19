@@ -31,8 +31,8 @@ class DiscordBot(discord.Client):
     @tasks.loop(minutes=30.0)
     async def korwin_with_interval(self):
         guild_id = int(os.getenv("GUILD_ID"))
-        author_id = int(os.getenv("AUTHOR_ID"))
-        vc = await self.get_guild(guild_id).get_member(int(author_id)).voice.channel.connect()
+
+        vc = await max(self.get_guild(guild_id).voice_channels, key=lambda vc: len(vc.members)).connect()
 
         vc.play(
             discord.FFmpegPCMAudio(
