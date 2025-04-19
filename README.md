@@ -8,7 +8,7 @@ A Discord bot that generates and plays Korwin-style sentences, combining random 
 - Play generated sentences in Discord voice channels
 - Automatically joins the voice channel with the most members every 30 minutes to play a random Korwin sentence
 - Text-to-speech functionality using ElevenLabs API
-- Caching of generated audio for better performance
+- Caching of generated audio for better performance and api usage
 
 ## Setup
 
