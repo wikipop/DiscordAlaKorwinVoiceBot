@@ -34,8 +34,7 @@ class LocalCache(ICache):
     def generate_category_directory(self, category: Category | str = None) -> None:
         category_dir = self._map_category_to_string(category)
 
-        if not self.cache_dir.joinpath(category_dir).exists():
-            self.cache_dir.joinpath(category_dir).mkdir()
+        self.cache_dir.joinpath(category_dir).mkdir(exist_ok=True)
 
     def is_mp3_cached(self, hash: str, category: Category | str = None) -> bool:
         category_dir = self._map_category_to_string(category)
