@@ -38,12 +38,12 @@ class DiscordBot(discord.Client):
         logging.info("Playing korwin with interval")
         guild_id = int(os.getenv("GUILD_ID"))
 
-        vc = await max(self.get_guild(guild_id).voice_channels, key=lambda vc: len(vc.members)).connect()
+        vc = await max(
+            self.get_guild(guild_id).voice_channels, key=lambda vc: len(vc.members)
+        ).connect()
 
         vc.play(
-            discord.FFmpegPCMAudio(
-                self.catalogue.get_random_sentence_mp3().export(), pipe=True
-            )
+            discord.FFmpegPCMAudio(self.catalogue.get_random_sentence_mp3().export(), pipe=True)
         )
 
         while vc.is_playing():

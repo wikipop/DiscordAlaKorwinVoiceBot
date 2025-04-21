@@ -24,12 +24,11 @@ def setup_logging(log_file: str = "voice_generator.log", level: int = logging.IN
 
     # Create formatters
     formatter = logging.Formatter(
-        fmt='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
+        fmt="[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
     )
 
     # Set up file handler
-    file_handler = logging.FileHandler(log_file, mode='w')
+    file_handler = logging.FileHandler(log_file, mode="w")
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 

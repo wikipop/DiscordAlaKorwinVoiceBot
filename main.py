@@ -29,7 +29,9 @@ def main():
     eleven_labs_api_key = os.getenv("ELEVEN_LABS_API_KEY")
 
     if not google_sheets_link or not eleven_labs_api_key:
-        logging.error("Missing required environment variables: GOOGLE_SHEETS_LINK and/or ELEVEN_LABS_API_KEY")
+        logging.error(
+            "Missing required environment variables: GOOGLE_SHEETS_LINK and/or ELEVEN_LABS_API_KEY"
+        )
         return
 
     # Initialize cache

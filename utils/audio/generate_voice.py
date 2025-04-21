@@ -3,6 +3,7 @@ Voice generation utilities for the KorwinAI Discord Bot.
 
 This module provides functions for generating speech from text using the ElevenLabs API.
 """
+
 import hashlib
 import io
 import logging
@@ -39,9 +40,15 @@ def generate_speech_from_text(text: str, cache: ICache) -> AudioSegment:
 
     logging.info(f"Generating MP3 for {text_hash}")
     client = ElevenLabs(api_key=os.environ["ELEVEN_LABS_API_KEY"])
-    audio = b"".join(client.text_to_speech.convert(
-        text=text, voice_id="pqHfZKP75CvOlQylNhV4", model_id="eleven_flash_v2_5",
-        language_code="pl", output_format="mp3_44100_128", ))
+    audio = b"".join(
+        client.text_to_speech.convert(
+            text=text,
+            voice_id="pqHfZKP75CvOlQylNhV4",
+            model_id="eleven_flash_v2_5",
+            language_code="pl",
+            output_format="mp3_44100_128",
+        )
+    )
 
     logging.info(f"Saving MP3 for {text_hash}")
     cache.save_mp3(audio, text_hash)

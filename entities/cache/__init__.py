@@ -7,7 +7,8 @@ This module provides caching functionality for audio files generated from text s
 import logging
 import pathlib
 from abc import ABC
-from typing import Union, Dict
+from typing import Dict, Union
+
 from pydub import AudioSegment
 
 from entities.catalogue.category import Category
@@ -20,6 +21,7 @@ class ICache(ABC):
     This class provides methods to save and load MP3 files from a cache,
     organized by category.
     """
+
     def __init__(self, cache_dir):
         self.cache_dir = cache_dir
         if not pathlib.Path(f"./{cache_dir}").exists():

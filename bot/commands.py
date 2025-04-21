@@ -76,7 +76,10 @@ class VoiceCommands:
 
             vc = await interaction.user.voice.channel.connect()
             vc.play(
-                discord.FFmpegPCMAudio(generate_speech_from_text(dziegiel, cache=self.bot.cache).export(), pipe=True))
+                discord.FFmpegPCMAudio(
+                    generate_speech_from_text(dziegiel, cache=self.bot.cache).export(), pipe=True
+                )
+            )
 
             # Wait until the audio finishes playing
             while vc.is_playing():

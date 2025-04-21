@@ -31,7 +31,6 @@ class LocalCache(ICache):
                     return False
         return True
 
-
     def generate_category_directory(self, category: Category | str = None) -> None:
         category_dir = self._map_category_to_string(category)
 
