@@ -1,7 +1,6 @@
 name: 🐛 Bug
 description: Report a bug.
 title: "[Bug]: "
-type: "bug"
 body:
   - type: textarea
     id: description
