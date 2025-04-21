@@ -12,7 +12,7 @@ from typing import BinaryIO
 from elevenlabs import ElevenLabs
 from pydub import AudioSegment
 
-from entities import Cache
+from entities import LocalCache
 
 
 def generate_speech_from_text(text: str) -> AudioSegment:
@@ -25,7 +25,7 @@ def generate_speech_from_text(text: str) -> AudioSegment:
     Returns:
         BinaryIO: A binary stream containing the generated MP3 audio.
     """
-    cache = Cache(cache_dir="cache")
+    cache = LocalCache(cache_dir="cache")
 
     if cached_mp3 := cache.is_custom_mp3_cached(text):
         logging.info(f"Using cached MP3 for {text} - by hash")

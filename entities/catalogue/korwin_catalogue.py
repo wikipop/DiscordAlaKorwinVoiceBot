@@ -7,15 +7,14 @@ text and audio segments.
 
 import hashlib
 import logging
-import pathlib
 from time import sleep
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Tuple
 
 import pandas as pd
 from elevenlabs import ElevenLabs
 from pydub import AudioSegment
 
-from entities.catalogue.cache import Cache
+from entities.cache import ICache
 from entities.catalogue.category import Category
 
 
@@ -27,17 +26,18 @@ class KorwinCatalogue:
     converting text to speech, and caching the results.
     """
 
-    def __init__(self, df_link: str, api_key: str):
+    def __init__(self, df_link: str, api_key: str, cache: ICache):
         """
         Initialize the KorwinCatalogue with a data source and API key.
 
         Args:
             df_link (str): Link to the CSV file containing text segments.
             api_key (str): ElevenLabs API key for text-to-speech conversion.
+            cache (ICache): Cache instance for caching audio segments.
         """
         self._df = pd.read_csv(df_link)
         self.api_key = api_key
-        self.cache = Cache("./cache")
+        self.cache = cache
 
     @property
     def df(self) -> pd.DataFrame:
@@ -48,6 +48,9 @@ class KorwinCatalogue:
             pd.DataFrame: The DataFrame with text segments.
         """
         return self._df
+
+    def is_cached(self) -> bool:
+        return self.cache.is_hashmap_cached(self.get_text_hash_map())
 
     def get_random_text_from_category(self, category: Category) -> str:
         """
@@ -70,19 +73,6 @@ class KorwinCatalogue:
         """
         return " ".join([self.get_random_text_from_category(cat) for cat in Category])
 
-    def check_if_all_is_cached(self) -> bool:
-        """
-        Check if all text segments have corresponding cached audio files.
-
-        Returns:
-            bool: True if all segments are cached, False otherwise.
-        """
-        for category_name, category in self.get_text_hash_map().items():
-            for cache_hash, text in category.items():
-                if not pathlib.Path(f"./cache/{category_name}/{cache_hash}.mp3").exists():
-                    return False
-        return True
-
     def get_random_mp3_from_category(self, category: Category) -> AudioSegment:
         """
         Get a random MP3 file from the specified category.
@@ -93,7 +83,7 @@ class KorwinCatalogue:
         Returns:
             AudioSegment: The audio segment.
         """
-        return self.cache.load_random_mp3_from_category(category)
+        return self.cache.load_random_mp3(category)
 
     def get_random_sentence_mp3(self) -> AudioSegment:
         """
@@ -122,11 +112,10 @@ class KorwinCatalogue:
         client = ElevenLabs(api_key=self.api_key)
 
         for category_name, category in self.get_text_hash_map().items():
-            if not pathlib.Path(f"./cache/{category_name}").exists():
-                pathlib.Path(f"./cache/{category_name}").mkdir()
+            self.cache.generate_category_directory(category=Category(category_name))
 
             for cache_hash, text in category.items():
-                if pathlib.Path(f"./cache/{category_name}/{cache_hash}.mp3").exists():
+                if self.cache.is_mp3_cached(category=Category(category_name), hash=cache_hash):
                     logging.info(f"Skipping {category_name}/{cache_hash}.mp3 - already exists")
                     continue
 
