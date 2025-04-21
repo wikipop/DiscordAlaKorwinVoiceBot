@@ -22,12 +22,12 @@ class ICache(ABC):
     organized by category.
     """
 
-    def __init__(self, cache_dir):
-        self.cache_dir = cache_dir
-        if not pathlib.Path(f"./{cache_dir}").exists():
-            logging.info(f"Creating cache directory: {cache_dir}")
-            pathlib.Path(f"./{cache_dir}").mkdir()
-        logging.info(f"Cache directory: {cache_dir}")
+    def __init__(self, cache_dir: Union[str, pathlib.Path]):
+        self.cache_dir = pathlib.Path(cache_dir)
+        if not self.cache_dir.exists():
+            logging.info(f"Creating cache directory: {self.cache_dir}")
+            self.cache_dir.mkdir()
+        logging.info(f"Cache directory: {self.cache_dir}")
 
     @staticmethod
     def _map_category_to_string(category: Category | str = None) -> str:
