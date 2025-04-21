@@ -46,5 +46,8 @@ class ICache(ABC):
     def save_mp3(self, audio: bytes, hash: str, category: Category | str = None) -> None:
         raise NotImplemented
 
+    def load_mp3(self, hash: str, category: Category | str = None) -> AudioSegment:
+        raise NotImplemented
+
     def load_random_mp3(self, category: Category | str = None) -> AudioSegment:
         raise NotImplemented

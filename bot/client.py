@@ -27,6 +27,7 @@ class DiscordBot(discord.Client):
         # Initialize bot components
         self.tree = app_commands.CommandTree(self)
         self.catalogue = catalogue
+        self.cache = catalogue.cache
         self.voice_commands = None
 
     @tasks.loop(minutes=3.5)

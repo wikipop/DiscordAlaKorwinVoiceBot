@@ -46,8 +46,15 @@ class LocalCache(ICache):
     def save_mp3(self, audio: bytes, hash: str, category: Category | str = None) -> None:
         category_dir = self._map_category_to_string(category)
 
+        self.generate_category_directory(category)
+
         with open(f"{self.cache_dir}/{category_dir}/{hash}.mp3", "wb") as f:
             f.write(audio)
+
+    def load_mp3(self, hash: str, category: Category | str = None) -> AudioSegment:
+        category_dir = self._map_category_to_string(category)
+
+        return AudioSegment.from_mp3(f"{self.cache_dir}/{category_dir}/{hash}.mp3")
 
     def load_random_mp3(self, category: Category | str = None) -> AudioSegment:
         category_dir = self._map_category_to_string(category)

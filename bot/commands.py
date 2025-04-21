@@ -1,10 +1,14 @@
 import logging
 import os
+from typing import TYPE_CHECKING
 
 import discord
 from anyio import sleep
 
 from utils.audio import generate_speech_from_text
+
+if TYPE_CHECKING:
+    from bot.client import DiscordBot
 
 
 class VoiceCommands:
@@ -12,7 +16,7 @@ class VoiceCommands:
     Handles voice-related commands for the Discord bot.
     """
 
-    def __init__(self, bot):
+    def __init__(self, bot: "DiscordBot"):
         self.bot = bot
         self._setup_commands()
 
@@ -20,7 +24,7 @@ class VoiceCommands:
         @self.bot.tree.command(
             name="korwin", description="Plays a random sentence from the catalogue"
         )
-        async def dziegiel(interaction: discord.Interaction):
+        async def play_message_from_catalogue(interaction: discord.Interaction):
             """
             Command that plays a random sentence from the catalogue in the voice channel.
             """
@@ -47,7 +51,7 @@ class VoiceCommands:
             await vc.disconnect()
 
         @self.bot.tree.command(name="bóg", description="Plays a custom text-to-speech message")
-        async def wykurz(interaction: discord.Interaction, dziegiel: str):
+        async def play_custom_message(interaction: discord.Interaction, dziegiel: str):
             """
             Command that plays a custom text-to-speech message in the voice channel.
             Only the author can use this command.
@@ -71,7 +75,8 @@ class VoiceCommands:
             await interaction.response.send_message(f"Playing: {dziegiel}", ephemeral=True)
 
             vc = await interaction.user.voice.channel.connect()
-            vc.play(discord.FFmpegPCMAudio(generate_speech_from_text(dziegiel), pipe=True))
+            vc.play(
+                discord.FFmpegPCMAudio(generate_speech_from_text(dziegiel, cache=self.bot.cache).export(), pipe=True))
 
             # Wait until the audio finishes playing
             while vc.is_playing():

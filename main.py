@@ -34,7 +34,7 @@ def main():
 
     # Initialize cache
     logging.info("Initializing cache...")
-    cache = LocalCache("./cache/")
+    cache = LocalCache("./cache")
 
     # Initialize the catalogue
     logging.info("Initializing Korwin catalogue...")
