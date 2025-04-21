@@ -26,7 +26,7 @@ class ICache(ABC):
         self.cache_dir = pathlib.Path(cache_dir)
         if not self.cache_dir.exists():
             logging.info(f"Creating cache directory: {self.cache_dir}")
-            self.cache_dir.mkdir()
+            self.cache_dir.mkdir(parents=True, exist_ok=True)
         logging.info(f"Cache directory: {self.cache_dir}")
 
     @staticmethod
