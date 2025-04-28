@@ -30,9 +30,9 @@ class DiscordBot(discord.Client):
         self.cache = catalogue.cache
         self.voice_commands = None
 
-    @tasks.loop(minutes=3.5)
+    @tasks.loop(minutes=5)
     async def korwin_with_interval(self):
-        if random.random() > 0.1:
+        if random.random() > 0.025:
             return
 
         logging.info("Playing korwin with interval")
